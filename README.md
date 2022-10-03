@@ -2,7 +2,9 @@
 
 É necessário ter o android studio e seus SDK's e API's, nodejs e ionic-cli instalados na máquina, e devidamente configurado suas path's nas variáveis do ambiente.
 
-Angular + Ionic + Capacitor
+Angular CLI: 14.2.4
+
+Ionic CLI 6.20.1 --- (Capacitor)
 
 node version: 16.15.1
 
