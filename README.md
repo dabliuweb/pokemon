@@ -1,8 +1,16 @@
 # Pokemon
 
 É necessário ter o android studio e seus SDK's e API's, nodejs e ionic-cli instalados na máquina, e devidamente configurado suas path's nas variáveis do ambiente.
+
 Angular + Ionic + Capacitor
+
 node version: 16.15.1
+
+Esse aplicativo foi desenvolvido utilizando a API [pokeapi.co](https://pokeapi.co/).
+
+Esse aplicativo apresenta uma lista com todos pokemons, além de mostrar detalhes de cada um deles.
+
+Foi desenvolvido um webservice em PHP para auxiliar o APP nas pesquisas de pokemon's pelo nome.
 
 ## Instruções de instalação
 
