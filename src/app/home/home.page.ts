@@ -4,26 +4,46 @@ import { PokemonDetailComponent } from '../general/modal/pokemon-detail/pokemon-
 import { pokemon } from '../models/pokemon';
 import { PokeAPIService } from '../services/poke-api.service';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  pokemons: pokemon[]
+  pokemons: pokemon[] = []
+  searchPokemon = null
+  page = 1;
+  limit = 20;
+  
   constructor(
     private pokeAPI: PokeAPIService,
     private modal: ModalController
   ) {
-    this.getAllPokemons()
+    this.getAllPokemons(false)
   }
 
+  async getAllPokemons(isInfinite, next?, event?){
 
-  async getAllPokemons(){
-    this.pokemons = await this.pokeAPI.listPokemons({offset: 0, limit: 30})
-    console.log(this.pokemons)
+    this.pokeAPI.listPokemons(next != undefined ? next : undefined).then(
+      (data:any)=>{
+        data.results.forEach(element => {
+          this.pokeAPI.getDetails(element).then(
+            (datas:any)=>{
+              element = {...element, ...datas}
+              this.pokemons.push(element)
+            }
+          );
+        });
+      }
+    )
+    if(isInfinite)
+    {
+      event.target.complete();
+      this.page++;
+
+    }
   }
-
 
   async PokemonDetails(pokemon){
     console.log(pokemon)
@@ -36,6 +56,26 @@ export class HomePage {
 
   }
 
-  
+  doInfinite(event) {
+    console.log(event)
+    let next = "https://pokeapi.co/api/v2/pokemon?limit="+this.limit+"&offset="+this.page*this.limit
+    this.getAllPokemons(true, next, event);
+  }
+
+  handleChange(event){
+    let value = event.detail.value;
+
+    if(value.length > 3){
+      this.pokeAPI.FindPokemon(value).then(
+        (data:any)=>{
+          this.searchPokemon = data;
+        }
+      )
+    }
+  }
+
+  cancelSearch(){
+    this.searchPokemon = null;
+  }
 
 }

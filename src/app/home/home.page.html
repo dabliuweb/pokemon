@@ -1,6 +1,30 @@
-<app-header></app-header>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-text color="light">
+        <h1 class="pokedex pokefamily">Pokédex</h1>
+      </ion-text>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar  color="primary">
+    <ion-searchbar
+      color="light"
+      class="ion-margin-top"
+      animated="true"
+      show-cancel-button="focus"
+      cancel-button-text="Cancelar"
+      show-clear-button="always"
+      clear-icon="trash-bin"
+      placeholder="Procurando um pokemon?"
+      (ionChange)="handleChange($event)"
+      (ionCancel)="cancelSearch()"
+      (ionClear)="cancelSearch()"
+      
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content class="ion-no-border" color="primary">
+<ion-content class="ion-no-border"*ngIf="searchPokemon === null">
 
   <ion-list class="ion-margin-top">
     <ion-card (click)="PokemonDetails(pokemon)" *ngFor="let pokemon of pokemons">
@@ -15,5 +39,33 @@
       </ion-card-content>
     </ion-card>
   </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>
+
+<ion-content class="ion-no-border"*ngIf="searchPokemon != null">
+
+  <ion-list class="ion-margin-top">
+    <ion-card (click)="PokemonDetails(pokemon)" *ngFor="let pokemon of searchPokemon">
+      <ion-card-content class="ion-text-center">
+      <ion-img class="icone" [src]="pokemon.sprites.other.dream_world.front_default"></ion-img>
+        <ion-label>
+          <ion-text>
+            <h1 class="pokedex pokefamily">{{ pokemon.name }}</h1>
+          </ion-text><br>
+          <ion-badge color="secondary" *ngFor="let value of pokemon.types">{{value.type.name}}</ion-badge>
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

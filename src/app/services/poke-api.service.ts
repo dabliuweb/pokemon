@@ -1,19 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { pokemon } from '../models/pokemon';
-
-export interface pagination {
-offset?: number;
-limit?: number;
-}
-
-export interface returnedPoke{
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: pokemon[];
-}
-
 
 @Injectable({
   providedIn: 'root'
@@ -21,31 +7,26 @@ export interface returnedPoke{
 export class PokeAPIService {
 
   baseURL = "https://pokeapi.co/api/v2/"
+  searchBaseURL = "https://dabliuweb.com.br/pokemon/index.php"
 
   constructor(
     private http: HttpClient
   ) {}
 
-  listPokemons(pagination?: pagination): pokemon[]{
-
-    let obj = []
-    this.http.get(this.baseURL + 'pokemon').toPromise().then(
-      (data: returnedPoke)=>{
-        data.results.forEach( pokemon => {
-          this.getDetails(pokemon).then(
-            (data:pokemon)=>{
-              pokemon = { ...pokemon, ...data}
-              obj.push(pokemon)
-            }
-          );
-        });        
-      }
-    );
-    return obj;
+  async listPokemons(pagination?){
+    if(pagination){
+      return this.http.get(pagination).toPromise();
+    }else{
+      return this.http.get(this.baseURL+'pokemon').toPromise();
+    }
   }
 
-  getDetails(pokemon){
+  async getDetails(pokemon){
     return this.http.get(pokemon.url).toPromise();
+  }
+
+  async FindPokemon(string){
+    return this.http.get(this.searchBaseURL + '?search=' + string).toPromise();
   }
 
 }
