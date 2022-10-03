@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="chevron-back-outline" color="primary"></ion-icon> Voltar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+<ion-card>
+  <ion-card-content class="ion-text-center">
+  <ion-img class="icone" [src]="pokemon.sprites.other.dream_world.front_default"></ion-img>
+    <ion-label>
+      <ion-text>
+        <h1 class="pokedex pokefamily">{{ pokemon.name }}</h1>
+      </ion-text><br>
+      <ion-badge color="secondary" *ngFor="let value of pokemon.types">{{value.type.name}}</ion-badge>
+    </ion-label>
+
+    <ion-list>
+      <ion-item *ngFor="let stat of pokemon.stats">
+        <ion-label>{{stat.stat.name}}</ion-label>
+        <ion-label slot="end"><ion-badge color="secondary">{{stat.base_stat}}</ion-badge></ion-label>
+      </ion-item>
+    </ion-list>
+
+    
+  </ion-card-content>
+</ion-card>
+
+</ion-content>

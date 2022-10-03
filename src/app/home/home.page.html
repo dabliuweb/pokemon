@@ -1,27 +1,9 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="primary">
-    <ion-title>
-      <ion-text color="light">
-        <h1 class="pokedex pokefamily">Pokédex</h1>
-      </ion-text>
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content class="ion-no-border" color="primary">
-  <ion-searchbar
-    color="light"
-    class="ion-margin-top"
-    animated="true"
-    show-cancel-button="focus"
-    cancel-button-text="Cancelar"
-    show-clear-button="always"
-    clear-icon="trash-bin"
-    placeholder="Procurando um pokemon?"
-  ></ion-searchbar>
 
   <ion-list class="ion-margin-vertical">
-    <ion-card *ngFor="let pokemon of pokemons">
+    <ion-card (click)="PokemonDetails(pokemon)" *ngFor="let pokemon of pokemons">
       <ion-card-content class="ion-text-center">
       <ion-img class="icone" [src]="pokemon.sprites.other.dream_world.front_default"></ion-img>
         <ion-label>
@@ -33,6 +15,5 @@
       </ion-card-content>
     </ion-card>
   </ion-list>
-
 
 </ion-content>
