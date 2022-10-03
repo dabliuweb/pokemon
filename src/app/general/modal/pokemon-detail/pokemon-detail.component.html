@@ -10,8 +10,10 @@
 <ion-content>
   
 <ion-card>
+  <ion-card-header>
+    <ion-img [src]="pokemon.sprites.other.dream_world.front_default" class="icone"></ion-img>
+  </ion-card-header>
   <ion-card-content class="ion-text-center">
-  <ion-img class="icone" [src]="pokemon.sprites.other.dream_world.front_default"></ion-img>
     <ion-label>
       <ion-text>
         <h1 class="pokedex pokefamily">{{ pokemon.name }}</h1>
